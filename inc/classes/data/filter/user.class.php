@@ -8,6 +8,8 @@ namespace The_SEO_Framework\Data\Filter;
 
 \defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
+use The_SEO_Framework\Meta;
+
 /**
  * The SEO Framework plugin
  * Copyright (C) 2023 - 2025 Sybre Waaijer, CyberWire B.V. (https://cyberwire.nl/)
@@ -60,6 +62,43 @@ final class User {
 
 					if ( $value > 3 )
 						$value = 0;
+					break;
+
+				case 'doctitle':
+				case 'og_title':
+				case 'tw_title':
+				case 'description':
+				case 'og_description':
+				case 'tw_description':
+					$value = Sanitize::metadata_content( $value );
+					break;
+
+				case 'canonical':
+				case 'social_image_url':
+					$value = \sanitize_url( $value, [ 'https', 'http' ] );
+					break;
+
+				case 'social_image_id':
+					$value = empty( $meta_value['social_image_url'] ) ? 0 : \absint( $value );
+					break;
+
+				case 'noindex':
+				case 'nofollow':
+				case 'noarchive':
+					$value = Sanitize::qubit( $value );
+					break;
+
+				case 'redirect':
+					$value = Sanitize::redirect_url( $value );
+					break;
+
+				case 'title_no_blog_name':
+					$value = Sanitize::boolean_integer( $value );
+					break;
+
+				case 'tw_card_type':
+					if ( ! \in_array( $value, Meta\Twitter::get_supported_cards(), true ) )
+						$value = '';
 					break;
 
 				default:
