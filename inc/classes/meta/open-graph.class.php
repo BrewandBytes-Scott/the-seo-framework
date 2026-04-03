@@ -131,6 +131,8 @@ class Open_Graph {
 			$title = Data\Plugin\Term::get_meta_item( 'og_title' );
 		} elseif ( \is_post_type_archive() ) {
 			$title = Data\Plugin\PTA::get_meta_item( 'og_title' );
+		} elseif ( Query::is_author() ) {
+			$title = Data\Plugin\User::get_meta_item( 'og_title', Query::get_the_real_id() );
 		}
 
 		if ( ! isset( $title ) ) return '';
@@ -172,6 +174,9 @@ class Open_Graph {
 				break;
 			case 'pta':
 				$title = Data\Plugin\PTA::get_meta_item( 'og_title', $args['pta'] );
+				break;
+			case 'user':
+				$title = Data\Plugin\User::get_meta_item( 'og_title', $args['uid'] );
 				break;
 		}
 
@@ -252,6 +257,8 @@ class Open_Graph {
 			$desc = Data\Plugin\Term::get_meta_item( 'og_description' );
 		} elseif ( \is_post_type_archive() ) {
 			$desc = Data\Plugin\PTA::get_meta_item( 'og_description' );
+		} elseif ( Query::is_author() ) {
+			$desc = Data\Plugin\User::get_meta_item( 'og_description', Query::get_the_real_id() );
 		}
 
 		if ( ! isset( $desc ) ) return '';
@@ -293,6 +300,9 @@ class Open_Graph {
 				break;
 			case 'pta':
 				$desc = Data\Plugin\PTA::get_meta_item( 'og_description', $args['pta'] );
+				break;
+			case 'user':
+				$desc = Data\Plugin\User::get_meta_item( 'og_description', $args['uid'] );
 				break;
 		}
 

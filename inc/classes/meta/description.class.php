@@ -210,6 +210,8 @@ class Description {
 			$desc = Data\Plugin\Term::get_meta_item( 'description' );
 		} elseif ( \is_post_type_archive() ) {
 			$desc = Data\Plugin\PTA::get_meta_item( 'description' );
+		} elseif ( Query::is_author() ) {
+			$desc = Data\Plugin\User::get_meta_item( 'description', Query::get_the_real_id() );
 		}
 
 		if ( isset( $desc ) && \strlen( $desc ) )
@@ -251,6 +253,10 @@ class Description {
 				break;
 			case 'pta':
 				$desc = Data\Plugin\PTA::get_meta_item( 'description', $args['pta'] );
+				break;
+			case 'user':
+				$desc = Data\Plugin\User::get_meta_item( 'description', $args['uid'] );
+				break;
 		}
 
 		if ( isset( $desc ) && \strlen( $desc ) )

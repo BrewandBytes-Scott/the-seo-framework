@@ -125,6 +125,14 @@ final class WebPage extends Reference {
 					break;
 				case 'term':
 					static::$type = 'CollectionPage';
+					break;
+				case 'user':
+					static::$type = 'ProfilePage';
+					$entity['mainEntity'] = &Author::get_dynamic_ref( [ 'uid' => $args['uid'] ] );
+
+					$user_registered = Data\User::get_userdata( $args['uid'], 'user_registered' );
+					if ( $user_registered )
+						$entity['dateCreated'] = \mysql2date( 'c', $user_registered );
 			}
 		} else {
 			if ( Query::is_singular() ) {
@@ -143,7 +151,14 @@ final class WebPage extends Reference {
 			if ( Data\Plugin::get_option( 'knowledge_output' ) && Query::is_real_front_page() )
 				$entity['about'] = &Organization::get_dynamic_ref();
 
-			if ( Query::is_archive() || Query::is_singular_archive() ) {
+			if ( Query::is_author() ) {
+				static::$type = 'ProfilePage';
+				$entity['mainEntity'] = &Author::get_dynamic_ref( [ 'uid' => Query::get_the_real_id() ] );
+
+				$user_registered = Data\User::get_userdata( Query::get_the_real_id(), 'user_registered' );
+				if ( $user_registered )
+					$entity['dateCreated'] = \mysql2date( 'c', $user_registered );
+			} elseif ( Query::is_archive() || Query::is_singular_archive() ) {
 				static::$type = 'CollectionPage';
 			} elseif ( Query::is_search() ) {
 				static::$type = [ 'CollectionPage', 'SearchResultsPage' ];

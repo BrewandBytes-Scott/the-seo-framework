@@ -284,6 +284,8 @@ class Title {
 			$title = Data\Plugin\Term::get_meta_item( 'doctitle' );
 		} elseif ( \is_post_type_archive() ) {
 			$title = Data\Plugin\PTA::get_meta_item( 'doctitle' );
+		} elseif ( Query::is_author() ) {
+			$title = Data\Plugin\User::get_meta_item( 'doctitle', Query::get_the_real_id() );
 		}
 
 		if ( isset( $title ) && \strlen( $title ) )
@@ -321,6 +323,10 @@ class Title {
 				break;
 			case 'pta':
 				$title = Data\Plugin\PTA::get_meta_item( 'doctitle', $args['pta'] );
+				break;
+			case 'user':
+				$title = Data\Plugin\User::get_meta_item( 'doctitle', $args['uid'] );
+				break;
 		}
 
 		if ( isset( $title ) && \strlen( $title ) )

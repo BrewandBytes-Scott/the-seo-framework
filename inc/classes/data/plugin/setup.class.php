@@ -265,6 +265,9 @@ class Setup {
 				'prev_next_archives'  => 1, // Adds next/prev tags.
 				'prev_next_frontpage' => 1, // Adds next/prev tags.
 
+				// Author.
+				'post_author' => '', // Author name fallback.
+
 				// Facebook.
 				'facebook_publisher' => '', // Facebook Business URL.
 				'facebook_author'    => '', // Facebook User URL.
@@ -287,6 +290,7 @@ class Setup {
 				'og_tags'        => 1, // Output of Open Graph meta tags.
 				'facebook_tags'  => 1, // Output the Facebook meta tags.
 				'twitter_tags'   => 1, // Output the Twitter meta tags.
+				'author_tags'    => 1, // Output the author meta tag.
 				'oembed_scripts' => 1, // Enable WordPress's oEmbed scripts.
 
 				// Social title settings.

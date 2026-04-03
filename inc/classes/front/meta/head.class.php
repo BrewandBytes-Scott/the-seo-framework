@@ -122,6 +122,7 @@ final class Head {
 					'Open_Graph',
 					'Facebook',
 					'Twitter',
+					'Author',
 					'Webmasters',
 					'Schema',
 				];
@@ -135,6 +136,9 @@ final class Head {
 
 		if ( ! Data\Plugin::get_option( 'twitter_tags' ) )
 			$remove_pools[] = 'Twitter';
+
+		if ( ! Data\Plugin::get_option( 'author_tags' ) )
+			$remove_pools[] = 'Author';
 
 		/**
 		 * @since 5.0.0

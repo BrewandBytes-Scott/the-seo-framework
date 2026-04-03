@@ -76,6 +76,8 @@ final class Front extends Factory {
 				$qubit = (int) Data\Plugin\Post::get_meta_item( "_genesis_$type" );
 			} elseif ( \is_post_type_archive() ) {
 				$qubit = (int) Data\Plugin\PTA::get_meta_item( $type );
+			} elseif ( Query::is_author() ) {
+				$qubit = (int) Data\Plugin\User::get_meta_item( $type, Query::get_the_real_id() );
 			}
 
 			switch ( isset( $qubit ) ) {

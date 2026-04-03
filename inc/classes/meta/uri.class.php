@@ -151,6 +151,8 @@ class URI {
 			$url = Data\Plugin\Term::get_meta_item( 'canonical' );
 		} elseif ( \is_post_type_archive() ) {
 			$url = Data\Plugin\PTA::get_meta_item( 'canonical' );
+		} elseif ( Query::is_author() ) {
+			$url = Data\Plugin\User::get_meta_item( 'canonical', Query::get_the_real_id() );
 		}
 
 		if ( empty( $url ) ) return '';
@@ -190,6 +192,10 @@ class URI {
 				break;
 			case 'pta':
 				$url = Data\Plugin\PTA::get_meta_item( 'canonical', $args['pta'] );
+				break;
+			case 'user':
+				$url = Data\Plugin\User::get_meta_item( 'canonical', $args['uid'] );
+				break;
 		}
 
 		if ( empty( $url ) ) return '';
@@ -754,6 +760,10 @@ class URI {
 					break;
 				case 'pta':
 					$url = Data\Plugin\PTA::get_meta_item( 'redirect', $args['pta'] );
+					break;
+				case 'user':
+					$url = Data\Plugin\User::get_meta_item( 'redirect', $args['uid'] );
+					break;
 			}
 		} else {
 			if ( Query::is_real_front_page() ) {
@@ -769,6 +779,8 @@ class URI {
 				$url = Data\Plugin\Term::get_meta_item( 'redirect' );
 			} elseif ( \is_post_type_archive() ) {
 				$url = Data\Plugin\PTA::get_meta_item( 'redirect' );
+			} elseif ( Query::is_author() ) {
+				$url = Data\Plugin\User::get_meta_item( 'redirect', Query::get_the_real_id() );
 			}
 		}
 

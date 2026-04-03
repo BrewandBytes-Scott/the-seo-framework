@@ -125,6 +125,16 @@ switch ( $instance ) :
 		if ( $active_conflicting_plugins_types['twitter_card'] )
 			HTML::attention_description( \__( 'Note: Another Twitter Card plugin has been detected. These meta tags might conflict.', 'autodescription' ) );
 
+		// Echo Author Tags checkbox.
+		HTML::wrap_fields(
+			Input::make_checkbox( [
+				'id'          => 'author_tags',
+				'label'       => \__( 'Output author meta tag?', 'autodescription' ),
+				'description' => \__( 'LinkedIn and some other services make use of this meta tag.', 'autodescription' ),
+			] ),
+			true,
+		);
+
 		// Echo oEmbed scripts checkboxes.
 		HTML::wrap_fields(
 			Input::make_checkbox( [
@@ -189,6 +199,20 @@ switch ( $instance ) :
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped.
 				echo Form::get_image_uploader_form( [ 'id' => 'tsf_fb_socialimage' ] );
 				?>
+			</p>
+			<hr>
+			<?php
+			HTML::header_title( \__( 'Author Settings', 'autodescription' ) );
+			HTML::description( \__( 'Set a default author name to use when no post author is available.', 'autodescription' ) );
+			?>
+			<p>
+				<label for="<?php Input::field_id( 'post_author' ); ?>">
+					<strong><?php \esc_html_e( 'Author Name Fallback', 'autodescription' ); ?></strong>
+				</label>
+			</p>
+			<?php HTML::description( \__( 'When a post has an author, their display name is used instead.', 'autodescription' ) ); ?>
+			<p>
+				<input type=text name="<?php Input::field_name( 'post_author' ); ?>" class=large-text id="<?php Input::field_id( 'post_author' ); ?>" value="<?= \esc_attr( Data\Plugin::get_option( 'post_author' ) ) ?>">
 			</p>
 		</div>
 		<hr>

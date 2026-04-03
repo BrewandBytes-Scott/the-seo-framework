@@ -103,6 +103,10 @@ class Twitter {
 					break;
 				case 'pta':
 					$card = Data\Plugin\PTA::get_meta_item( 'tw_card_type', $args['pta'] );
+					break;
+				case 'user':
+					$card = Data\Plugin\User::get_meta_item( 'tw_card_type', $args['uid'] );
+					break;
 			}
 		} else {
 			if ( Query::is_real_front_page() ) {
@@ -118,6 +122,8 @@ class Twitter {
 				$card = Data\Plugin\Term::get_meta_item( 'tw_card_type' );
 			} elseif ( \is_post_type_archive() ) {
 				$card = Data\Plugin\PTA::get_meta_item( 'tw_card_type' );
+			} elseif ( Query::is_author() ) {
+				$card = Data\Plugin\User::get_meta_item( 'tw_card_type', Query::get_the_real_id() );
 			}
 		}
 
@@ -248,6 +254,8 @@ class Twitter {
 			$title = Data\Plugin\Term::get_meta_item( 'tw_title' );
 		} elseif ( \is_post_type_archive() ) {
 			$title = Data\Plugin\PTA::get_meta_item( 'tw_title' );
+		} elseif ( Query::is_author() ) {
+			$title = Data\Plugin\User::get_meta_item( 'tw_title', Query::get_the_real_id() );
 		}
 
 		if ( ! isset( $title ) ) return '';
@@ -291,6 +299,10 @@ class Twitter {
 				break;
 			case 'pta':
 				$title = Data\Plugin\PTA::get_meta_item( 'tw_title', $args['pta'] );
+				break;
+			case 'user':
+				$title = Data\Plugin\User::get_meta_item( 'tw_title', $args['uid'] );
+				break;
 		}
 
 		if ( ! isset( $title ) ) return '';
@@ -372,6 +384,8 @@ class Twitter {
 			$desc = Data\Plugin\Term::get_meta_item( 'tw_description' );
 		} elseif ( \is_post_type_archive() ) {
 			$desc = Data\Plugin\PTA::get_meta_item( 'tw_description' );
+		} elseif ( Query::is_author() ) {
+			$desc = Data\Plugin\User::get_meta_item( 'tw_description', Query::get_the_real_id() );
 		}
 
 		// Do not check empty(). See strlen below.
@@ -416,6 +430,10 @@ class Twitter {
 				break;
 			case 'pta':
 				$desc = Data\Plugin\PTA::get_meta_item( 'tw_description', $args['pta'] );
+				break;
+			case 'user':
+				$desc = Data\Plugin\User::get_meta_item( 'tw_description', $args['uid'] );
+				break;
 		}
 
 		// Do not check empty(). See strlen below.

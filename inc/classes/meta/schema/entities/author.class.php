@@ -115,6 +115,10 @@ final class Author extends Reference {
 			// 'url'   => Meta\URI::get_bare_author_url( $author_id ),
 		];
 
+		$avatar_data = \get_avatar_data( $author_id, [ 'size' => 256 ] );
+		if ( ! empty( $avatar_data['found_avatar'] ) && ! empty( $avatar_data['url'] ) )
+			$entity['image'] = $avatar_data['url'];
+
 		if ( $user_meta['facebook_page'] )
 			$entity['sameAs'][] = \sanitize_url( $user_meta['facebook_page'], [ 'https', 'http' ] );
 		if ( $user_meta['twitter_page'] )

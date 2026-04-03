@@ -108,6 +108,7 @@ final class Registry {
 				&& (
 					   ( Query::is_archive_admin() && Taxonomy::is_supported() )
 					|| ( Query::is_singular_admin() && Post_Type::is_supported() )
+					|| ( Query::is_profile_edit() )
 				)
 			)
 		);

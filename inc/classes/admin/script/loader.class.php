@@ -125,6 +125,20 @@ class Loader {
 				if ( Data\Plugin::get_option( 'display_pixel_counter' ) || Data\Plugin::get_option( 'display_character_counter' ) )
 					$scripts[] = self::get_counter_scripts();
 			}
+		} elseif ( Query::is_profile_edit() ) {
+			if ( Data\Plugin::get_option( 'display_user_edit_options' ) ) {
+				self::prepare_media_scripts();
+
+				$scripts[] = self::get_user_edit_scripts();
+				$scripts[] = self::get_media_scripts();
+				$scripts[] = self::get_title_scripts();
+				$scripts[] = self::get_description_scripts();
+				$scripts[] = self::get_social_scripts();
+				$scripts[] = self::get_ays_scripts();
+
+				if ( Data\Plugin::get_option( 'display_pixel_counter' ) || Data\Plugin::get_option( 'display_character_counter' ) )
+					$scripts[] = self::get_counter_scripts();
+			}
 		} elseif ( Query::is_wp_lists_edit() ) {
 			if ( Data\Plugin::get_option( 'display_list_edit_options' ) ) {
 				$scripts[] = self::get_list_edit_scripts();
@@ -563,6 +577,47 @@ class Loader {
 							'edit_term' => [
 								$id => Utils::create_ajax_capability_nonce( 'edit_term', $id ),
 							],
+						],
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * Returns User edit scripts params.
+	 *
+	 * @since 5.1.5
+	 *
+	 * @return array The script params.
+	 */
+	public static function get_user_edit_scripts() {
+
+		$additions_forced_disabled = (bool) Data\Plugin::get_option( 'title_rem_additions' );
+
+		return [
+			[
+				'id'       => 'tsf-user',
+				'type'     => 'css',
+				'deps'     => [ 'tsf-tt', 'tsf' ],
+				'autoload' => true,
+				'name'     => 'term',
+				'base'     => \THE_SEO_FRAMEWORK_DIR_URL . 'lib/css/',
+				'ver'      => \THE_SEO_FRAMEWORK_VERSION,
+			],
+			[
+				'id'       => 'tsf-user',
+				'type'     => 'js',
+				'deps'     => [ 'tsf-ays', 'tsf-title', 'tsf-description', 'tsf-social', 'tsf-tt', 'tsf' ],
+				'autoload' => true,
+				'name'     => 'user',
+				'base'     => \THE_SEO_FRAMEWORK_DIR_URL . 'lib/js/',
+				'ver'      => \THE_SEO_FRAMEWORK_VERSION,
+				'l10n'     => [
+					'name' => 'tsfUserL10n',
+					'data' => [
+						'params' => [
+							'additionsForcedDisabled' => $additions_forced_disabled,
 						],
 					],
 				],
