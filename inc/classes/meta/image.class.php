@@ -386,6 +386,17 @@ class Image {
 					'url' => Data\Plugin\PTA::get_meta_item( 'social_image_url' ),
 					'id'  => Data\Plugin\PTA::get_meta_item( 'social_image_id' ),
 				];
+			} elseif ( Query::is_author() ) {
+				$details = [
+					'url' => Data\Plugin\User::get_meta_item( 'social_image_url', Query::get_the_real_id() ),
+					'id'  => Data\Plugin\User::get_meta_item( 'social_image_id', Query::get_the_real_id() ),
+				];
+
+				if ( empty( $details['url'] ) ) {
+					$avatar_data = \get_avatar_data( Query::get_the_real_id(), [ 'size' => 1200 ] );
+					if ( ! empty( $avatar_data['found_avatar'] ) && ! empty( $avatar_data['url'] ) )
+						$details = [ 'url' => $avatar_data['url'], 'id' => 0 ];
+				}
 			}
 		}
 
@@ -465,6 +476,18 @@ class Image {
 						'url' => Data\Plugin\PTA::get_meta_item( 'social_image_url', $args['pta'] ),
 						'id'  => Data\Plugin\PTA::get_meta_item( 'social_image_id', $args['pta'] ),
 					];
+					break;
+				case 'user':
+					$details = [
+						'url' => Data\Plugin\User::get_meta_item( 'social_image_url', $args['uid'] ),
+						'id'  => Data\Plugin\User::get_meta_item( 'social_image_id', $args['uid'] ),
+					];
+
+					if ( empty( $details['url'] ) ) {
+						$avatar_data = \get_avatar_data( $args['uid'], [ 'size' => 1200 ] );
+						if ( ! empty( $avatar_data['found_avatar'] ) && ! empty( $avatar_data['url'] ) )
+							$details = [ 'url' => $avatar_data['url'], 'id' => 0 ];
+					}
 			}
 		}
 
